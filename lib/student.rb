@@ -10,17 +10,15 @@ class Student
   end
 
   def self.all
-    # retrieve all the rows from the "Students" database
-    # remember each row should be a new instance of the Student class
     sql =<<-SQL
       SELECT *
       FROM students
-      SQL
+    SQL
 
-      DB[:conn].execute(sql).map do |row|
-        self.new_from_db(row)
-      end
+    DB[:conn].execute(sql).map do |row|
+      self.new_from_db(row)
     end
+  end
 
   def self.find_by_name(name)
     sql =<<-SQL
@@ -54,6 +52,19 @@ class Student
 
     DB[:conn].execute(sql)
   end
+
+  def self.first_X_students_in_grade_10(X)
+    sql =<<-SQL
+      SELECT *
+      FROM students
+      WHERE grade < 10
+      LIMIT ?
+    SQL
+
+    DB[:conn].execute(sql, X)
+  end
+
+
 
   def save
     sql = <<-SQL
