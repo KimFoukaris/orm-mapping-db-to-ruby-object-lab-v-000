@@ -28,13 +28,19 @@ class Student
       FROM students
       WHERE name = ?
       LIMIT 1
-      SQL
+    SQL
 
       DB[:conn].execute(sql, name).map do |row|
         self.new_from_db(row)
       end.first
-    # find the student in the database given a name
-    # return a new instance of the Student class
+  end
+
+  def count_all_students_in_grade_9
+    sql =<<-SQL
+      SELECT *
+      FROM students
+      WHERE grade = "9"
+    SQL
   end
 
   def save
