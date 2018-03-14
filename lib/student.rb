@@ -15,8 +15,6 @@ class Student
     sql =<<-SQL
       SELECT *
       FROM students
-      WHERE name = ?
-      LIMIT 1
       SQL
 
       DB[:conn].execute(sql, name).map do |row|
